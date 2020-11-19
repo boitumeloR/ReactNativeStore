@@ -14,18 +14,13 @@ import {
   View,
   Text,
   StatusBar,
-  Button,
 } from 'react-native';
 
 import {
-  Header,
-  LearnMoreLinks,
   Colors,
-  DebugInstructions,
-  ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-import Login from './pages/Login';
+import {Routes} from './routing/Routes';
 
 const App = () => {
   return (
@@ -41,7 +36,7 @@ const App = () => {
             </View>
           )}
           <View style={styles.body}>
-            <Login />
+            <Routes />
           </View>
         </ScrollView>
       </SafeAreaView>
