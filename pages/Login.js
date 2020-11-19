@@ -8,12 +8,13 @@ import {
 } from 'react-native';
 
 const Login = () => {
+
   return (
     <View style = {styles.centeredView}>
       <View>
         <Text style =  {styles.txt}>Login to Gain Access</Text>
       </View>
-      <TextInput style = {styles.username}/>
+      <TextInput style = {styles.username} />
       <TextInput style = {styles.username}/>
     </View>
   );
