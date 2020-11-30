@@ -20,7 +20,7 @@ import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
 
-import {Routes} from './routing/Routes';
+import Routes from './routing/Routes.js';
 
 const App = () => {
   return (
@@ -30,14 +30,9 @@ const App = () => {
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}>
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
+            <View>
+              <Routes />
             </View>
-          )}
-          <View style={styles.body}>
-            <Routes />
-          </View>
         </ScrollView>
       </SafeAreaView>
     </>
