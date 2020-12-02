@@ -12,7 +12,6 @@ import {
   StyleSheet,
   ScrollView,
   View,
-  Text,
   StatusBar,
 } from 'react-native';
 
@@ -30,7 +29,7 @@ const App = () => {
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}>
-            <View>
+            <View style = { styles.mainSection}>
               <Routes />
             </View>
         </ScrollView>
@@ -42,6 +41,9 @@ const App = () => {
 const styles = StyleSheet.create({
   scrollView: {
     backgroundColor: Colors.lighter,
+  },
+  mainSection: {
+    flex: 1
   },
   engine: {
     position: 'absolute',
