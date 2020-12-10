@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import {
   Text,
@@ -20,11 +20,44 @@ const Login = () => {
   return (
     <View style = {styles.container}>
       <View style = { styles.header}>
-        <Text>Login to Gain Access</Text>
+        <Text style = {styles.text_header}>Login to Gain Access</Text>
       </View>
       <View style = {styles.footer}>
-        <TextInput style = {styles.username} />
-        <TextInput style = {styles.username}/>
+        <Text style = {styles.text_footer}>Email Address</Text>
+        <View style = {styles.action}>
+          <FontAwesome
+            name = "user-o"
+            color = "#05375a"
+            size = {20}
+          />
+          <TextInput style = {styles.textInput}
+          placeholder = "Enter your email"
+          autoCapitalize = "none"
+          />
+          <Feather
+            name = "check-circle"
+            color = "green"
+            size = {20}
+          />
+        </View>
+        <Text style = {[styles.text_footer, styles.passwordAddition]}>Password</Text>
+        <View style = {styles.action}>
+          <FontAwesome
+            name = "lock"
+            color = "#05375a"
+            size = {20}
+          />
+          <TextInput style = {styles.textInput}
+          placeholder = "Password"
+          autoCapitalize = "none"
+          secureTextEntry = {true}
+          />
+          <Feather
+            name = "eye-off"
+            color = "grey"
+            size = {20}
+          />
+        </View>
       </View>
     </View>
   );
@@ -38,6 +71,9 @@ const styles = StyleSheet.create({
   textInput: {
     marginTop: Platform.OS === 'ios' ? 0 : 12,
     paddingLeft: 10,
+  },
+  passwordAddition: {
+    marginTop: 35,
   },
   header: {
     flex: 1,
