@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
   Text,
@@ -8,6 +8,7 @@ import {
   Platform,
   TextInput,
   View,
+  StatusBar,
 } from 'react-native';
 
 import {LinearGradient} from 'react-native-linear-gradient';
@@ -15,14 +16,55 @@ import * as Animatable from 'react-native-animatable';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 
-const Login = () => {
+const Login = ({navigation}) => {
+
+  const [data, setData] = useState({
+    email: '',
+    password: '',
+    checkInputChange: false,
+    secureTextEntry: true,
+  });
+
+  const changeInput = (value) => {
+    if (value.length !== 0 ) {
+      setData({
+        ...data,
+        email: value,
+        checkInputChange: true,
+      });
+    } else {
+      setData({
+        ...data,
+        email: value,
+        checkInputChange: false,
+      });
+    }
+  };
+
+  const handlePasswordChange = (value) => {
+    setData({
+      ...data,
+      password: value,
+    });
+  };
+
+  const togglePassword = () => {
+    setData({
+      ...data,
+      secureTextEntry: !data.secureTextEntry,
+    });
+  };
 
   return (
     <View style = {styles.container}>
+      <StatusBar barStyle = "light-content" backgroundColor = "#009387"/>
       <View style = { styles.header}>
         <Text style = {styles.text_header}>Login to Gain Access</Text>
       </View>
-      <View style = {styles.footer}>
+      <Animatable.View
+        style = {styles.footer}
+        animation = "fadeInUpBig"
+      >
         <Text style = {styles.text_footer}>Email Address</Text>
         <View style = {styles.action}>
           <FontAwesome
@@ -33,12 +75,20 @@ const Login = () => {
           <TextInput style = {styles.textInput}
           placeholder = "Enter your email"
           autoCapitalize = "none"
+          onChangeText = { (val) => changeInput(val)}
           />
-          <Feather
-            name = "check-circle"
-            color = "green"
-            size = {20}
-          />
+          {
+            data.checkInputChange ?
+            <Animatable.View
+              animation = "bounceIn"
+            >
+              <Feather
+                name =  "check-circle"
+                color = "grey"
+                size = {20}
+              />
+            </Animatable.View> : null
+          }
         </View>
         <Text style = {[styles.text_footer, styles.passwordAddition]}>Password</Text>
         <View style = {styles.action}>
@@ -50,15 +100,43 @@ const Login = () => {
           <TextInput style = {styles.textInput}
           placeholder = "Password"
           autoCapitalize = "none"
-          secureTextEntry = {true}
+          secureTextEntry = {data.secureTextEntry}
+          onChangeText = { (val) => handlePasswordChange(val)}
           />
-          <Feather
-            name = "eye-off"
-            color = "grey"
-            size = {20}
-          />
+          <TouchableOpacity
+            onPress = {() => togglePassword()}
+          >
+            {
+              data.secureTextEntry ?
+              <Feather
+              name =  "eye-off"
+              color = "grey"
+              size = {20}
+              /> :
+              <Feather
+                name =  "eye"
+                color = "grey"
+                size = {20}
+              />
+            }
+          </TouchableOpacity>
         </View>
-      </View>
+
+        <View style = { styles.button}>
+            <LinearGradient
+              colors = {['#08d4c4', '#01ab9d']}
+              style = {styles.signIn}
+            >
+              <Text style = { [styles.textSign, styles.textAddon]}>Sign In</Text>
+            </LinearGradient>
+            <TouchableOpacity
+              onPress = { () => navigation.navigate('SignUp')}
+              style = { [styles.signIn]}
+            >
+              <Text>Sign Up</Text>
+            </TouchableOpacity>
+        </View>
+      </Animatable.View>
     </View>
   );
 };
@@ -113,9 +191,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 10,
   },
+  signUpAdd: {
+    borderWidth: 1,
+    marginTop: 15,
+    borderColor: '#009387',
+  },
   textSign: {
     fontSize: 18,
     fontWeight: 'bold',
+  },
+  textAddon: {
+    color: '#fff',
   },
   action: {
     flexDirection: 'row',
