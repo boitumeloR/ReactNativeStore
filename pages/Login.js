@@ -13,10 +13,10 @@ import {
 
 import {LinearGradient} from 'react-native-linear-gradient';
 import * as Animatable from 'react-native-animatable';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import Feather from 'react-native-vector-icons/Feather';
+import {FontAwesome} from 'react-native-vector-icons/FontAwesome';
+import {Feather} from 'react-native-vector-icons/Feather';
 
-const Login = ({navigation}) => {
+const Login = () => {
 
   const [data, setData] = useState({
     email: '',
@@ -57,87 +57,87 @@ const Login = ({navigation}) => {
 
   return (
     <View style = {styles.container}>
-      <StatusBar barStyle = "light-content" backgroundColor = "#009387"/>
-      <View style = { styles.header}>
-        <Text style = {styles.text_header}>Login to Gain Access</Text>
-      </View>
-      <Animatable.View
-        style = {styles.footer}
-        animation = "fadeInUpBig"
-      >
-        <Text style = {styles.text_footer}>Email Address</Text>
-        <View style = {styles.action}>
-          <FontAwesome
-            name = "user-o"
-            color = "#05375a"
-            size = {20}
-          />
-          <TextInput style = {styles.textInput}
-          placeholder = "Enter your email"
-          autoCapitalize = "none"
-          onChangeText = { (val) => changeInput(val)}
-          />
-          {
-            data.checkInputChange ?
-            <Animatable.View
-              animation = "bounceIn"
-            >
-              <Feather
-                name =  "check-circle"
-                color = "grey"
-                size = {20}
-              />
-            </Animatable.View> : null
-          }
-        </View>
-        <Text style = {[styles.text_footer, styles.passwordAddition]}>Password</Text>
-        <View style = {styles.action}>
-          <FontAwesome
-            name = "lock"
-            color = "#05375a"
-            size = {20}
-          />
-          <TextInput style = {styles.textInput}
-          placeholder = "Password"
-          autoCapitalize = "none"
-          secureTextEntry = {data.secureTextEntry}
-          onChangeText = { (val) => handlePasswordChange(val)}
-          />
-          <TouchableOpacity
-            onPress = {() => togglePassword()}
+          <StatusBar barStyle = "light-content" backgroundColor = "#009387"/>
+    <View style = { styles.header}>
+      <Text style = {styles.text_header}>Login to Gain Access</Text>
+    </View>
+    <Animatable.View
+      style = {styles.footer}
+      animation = "fadeInUpBig"
+    >
+      <Text style = {styles.text_footer}>Email Address</Text>
+      <View style = {styles.action}>
+        <FontAwesome
+          name = "user-o"
+          color = "#05375a"
+          size = {20}
+        />
+        <TextInput style = {styles.textInput}
+        placeholder = "Enter your email"
+        autoCapitalize = "none"
+        onChangeText = { (val) => changeInput(val)}
+        />
+        {
+          data.checkInputChange ?
+          <Animatable.View
+            animation = "bounceIn"
           >
-            {
-              data.secureTextEntry ?
-              <Feather
-              name =  "eye-off"
+            <Feather
+              name =  "check-circle"
               color = "grey"
               size = {20}
-              /> :
-              <Feather
-                name =  "eye"
-                color = "grey"
-                size = {20}
-              />
-            }
-          </TouchableOpacity>
-        </View>
+            />
+          </Animatable.View> : null
+        }
+      </View>
+      <Text style = {[styles.text_footer, styles.passwordAddition]}>Password</Text>
+      <View style = {styles.action}>
+        <FontAwesome
+          name = "lock"
+          color = "#05375a"
+          size = {20}
+        />
+        <TextInput style = {styles.textInput}
+        placeholder = "Password"
+        autoCapitalize = "none"
+        secureTextEntry = {data.secureTextEntry}
+        onChangeText = { (val) => handlePasswordChange(val)}
+        />
+        <TouchableOpacity
+          onPress = {() => togglePassword()}
+        >
+          {
+            data.secureTextEntry ?
+            <Feather
+            name =  "eye-off"
+            color = "grey"
+            size = {20}
+            /> :
+            <Feather
+              name =  "eye"
+              color = "grey"
+              size = {20}
+            />
+          }
+        </TouchableOpacity>
+      </View>
 
-        <View style = { styles.button}>
-            <LinearGradient
-              colors = {['#08d4c4', '#01ab9d']}
-              style = {styles.signIn}
-            >
-              <Text style = { [styles.textSign, styles.textAddon]}>Sign In</Text>
-            </LinearGradient>
-            <TouchableOpacity
-              onPress = { () => navigation.navigate('SignUp')}
-              style = { [styles.signIn]}
-            >
-              <Text>Sign Up</Text>
-            </TouchableOpacity>
-        </View>
-      </Animatable.View>
-    </View>
+      <View style = { styles.button}>
+          <LinearGradient
+            colors = {['#08d4c4', '#01ab9d']}
+            style = {styles.signIn}
+          >
+            <Text style = { [styles.textSign, styles.textAddon]}>Sign In</Text>
+          </LinearGradient>
+          <TouchableOpacity
+            // onPress = { () => navigation.navigate('SignUp')}
+            style = { [styles.signIn]}
+          >
+            <Text>Sign Up</Text>
+          </TouchableOpacity>
+      </View>
+    </Animatable.View>
+  </View>
   );
 };
 
@@ -219,5 +219,7 @@ const styles = StyleSheet.create({
   },
 });
 
-
 export default Login;
+
+
+

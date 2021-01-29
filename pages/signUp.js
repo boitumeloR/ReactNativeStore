@@ -16,7 +16,7 @@ import * as Animatable from 'react-native-animatable';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 
-const Login = ({navigation}) => {
+const SignUp = ({navigation}) => {
 
   const [data, setData] = useState({
     email: '',
@@ -263,4 +263,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default Login;
+export default SignUp;
