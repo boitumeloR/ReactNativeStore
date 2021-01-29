@@ -16,11 +16,11 @@ import * as Animatable from 'react-native-animatable';
 import {FontAwesome} from 'react-native-vector-icons/FontAwesome';
 import {Feather} from 'react-native-vector-icons/Feather';
 
-const Login = () => {
+const Login = ({navigation}) => {
 
   const [data, setData] = useState({
-    email: '',
-    password: '',
+    email: 'Hello',
+    password: 'World',
     checkInputChange: false,
     secureTextEntry: true,
   });
@@ -57,80 +57,45 @@ const Login = () => {
 
   return (
     <View style = {styles.container}>
-          <StatusBar barStyle = "light-content" backgroundColor = "#009387"/>
-    <View style = { styles.header}>
-      <Text style = {styles.text_header}>Login to Gain Access</Text>
-    </View>
-    <Animatable.View
+      <StatusBar barStyle = "light-content" backgroundColor = "#009387"/>
+      <View style = { styles.header}>
+        <Text style = {styles.text_header}>Login to Gain Access</Text>
+      </View>
+
+      <Animatable.View
       style = {styles.footer}
       animation = "fadeInUpBig"
-    >
+      >
       <Text style = {styles.text_footer}>Email Address</Text>
       <View style = {styles.action}>
-        <FontAwesome
-          name = "user-o"
-          color = "#05375a"
-          size = {20}
-        />
         <TextInput style = {styles.textInput}
-        placeholder = "Enter your email"
-        autoCapitalize = "none"
-        onChangeText = { (val) => changeInput(val)}
-        />
-        {
-          data.checkInputChange ?
-          <Animatable.View
-            animation = "bounceIn"
-          >
-            <Feather
-              name =  "check-circle"
-              color = "grey"
-              size = {20}
-            />
-          </Animatable.View> : null
-        }
+          placeholder = "Enter your email"
+          autoCapitalize = "none"
+          value = {data.email}
+          onChangeText = { (val) => changeInput(val)}
+          />
       </View>
       <Text style = {[styles.text_footer, styles.passwordAddition]}>Password</Text>
       <View style = {styles.action}>
-        <FontAwesome
-          name = "lock"
-          color = "#05375a"
-          size = {20}
-        />
         <TextInput style = {styles.textInput}
         placeholder = "Password"
         autoCapitalize = "none"
         secureTextEntry = {data.secureTextEntry}
+        value = {data.password}
+        focusable = {true}
         onChangeText = { (val) => handlePasswordChange(val)}
         />
-        <TouchableOpacity
-          onPress = {() => togglePassword()}
-        >
-          {
-            data.secureTextEntry ?
-            <Feather
-            name =  "eye-off"
-            color = "grey"
-            size = {20}
-            /> :
-            <Feather
-              name =  "eye"
-              color = "grey"
-              size = {20}
-            />
-          }
-        </TouchableOpacity>
       </View>
 
       <View style = { styles.button}>
-          <LinearGradient
+          {/* <LinearGradient
             colors = {['#08d4c4', '#01ab9d']}
             style = {styles.signIn}
           >
             <Text style = { [styles.textSign, styles.textAddon]}>Sign In</Text>
-          </LinearGradient>
+          </LinearGradient> */}
           <TouchableOpacity
-            // onPress = { () => navigation.navigate('SignUp')}
+            onPress = { () => navigation.navigate('SignUp')}
             style = { [styles.signIn]}
           >
             <Text>Sign Up</Text>
@@ -144,11 +109,13 @@ const Login = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'center',
     backgroundColor: '#009387',
   },
   textInput: {
     marginTop: Platform.OS === 'ios' ? 0 : 12,
     paddingLeft: 10,
+    height: 60,
   },
   passwordAddition: {
     marginTop: 35,
@@ -183,6 +150,9 @@ const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
     marginTop: 50,
+    backgroundColor: '#009387',
+    borderRadius: 30,
+    color: '#fff',
   },
   signIn: {
     width: '100%',

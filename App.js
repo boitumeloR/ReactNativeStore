@@ -12,6 +12,7 @@ import {
   StyleSheet,
   ScrollView,
   View,
+  Text,
   StatusBar,
 } from 'react-native';
 
@@ -33,7 +34,7 @@ import {
 } from 'react-native-paper';
 import Routes from './routing/Routes.js';
 import { useState } from 'react';
-import Login from './pages/login.js';
+import Login from './pages/Login.js';
 import StackScreen from './pages/StackScreens.js';
 
 const Drawer = createDrawerNavigator();
@@ -66,16 +67,15 @@ const App = () => {
 
   const theme = isDarkTheme ? customDarkTheme : customDefaultTheme;
   return (
-    <PaperProvider theme = {theme}>
-      <NavigationContainer theme = {theme}>
-        { loggedIn ? (
-          <Drawer.Screen name = "Login" component = {Login}/>
-        ) :
-        <Drawer.Screen name = "Login" component = {Login}/>
-        }
-        <StackScreen />
-      </NavigationContainer>
-    </PaperProvider>
+    <View style = {styles.mainSection}>
+      {/* <SafeAreaView> */}
+        {/* <PaperProvider theme = {theme}> */}
+        <NavigationContainer theme = {theme}>
+          <StackScreen />
+        </NavigationContainer>
+      {/* </PaperProvider> */}
+      {/* </SafeAreaView> */}
+    </View>
   );
 };
 
@@ -83,8 +83,12 @@ const styles = StyleSheet.create({
   scrollView: {
     backgroundColor: Colors.lighter,
   },
+  baseText: {
+    fontFamily: 'Cochin',
+  },
   mainSection: {
     flex: 1,
+    justifyContent: 'center',
   },
   engine: {
     position: 'absolute',
