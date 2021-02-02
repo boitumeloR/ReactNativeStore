@@ -9,6 +9,7 @@ import {
   TextInput,
   View,
   StatusBar,
+  ScrollView,
 } from 'react-native';
 
 import {LinearGradient} from 'react-native-linear-gradient';
@@ -68,7 +69,7 @@ const SignUp = ({navigation}) => {
 
   return (
     <View style = {styles.container}>
-      <StatusBar barStyle = "light-content" backgroundColor = "#009387"/>
+      <StatusBar barStyle = "light-content" backgroundColor = "#333333"/>
       <View style = { styles.header}>
         <Text style = {styles.text_header}>Sign Up As A User!</Text>
       </View>
@@ -76,109 +77,44 @@ const SignUp = ({navigation}) => {
         style = {styles.footer}
         animation = "fadeInUpBig"
       >
+        <ScrollView bounces = {true} showsVerticalScrollIndicator = {false}>
         <Text style = {styles.text_footer}>Email Address</Text>
         <View style = {styles.action}>
-          <FontAwesome
-            name = "user-o"
-            color = "#05375a"
-            size = {20}
-          />
           <TextInput style = {styles.textInput}
           placeholder = "Enter your email"
           autoCapitalize = "none"
           onChangeText = { (val) => changeInput(val)}
           />
-          {
-            data.checkInputChange ?
-            <Animatable.View
-              animation = "bounceIn"
-            >
-              <Feather
-                name =  "check-circle"
-                color = "grey"
-                size = {20}
-              />
-            </Animatable.View> : null
-          }
         </View>
         <Text style = {[styles.text_footer, styles.passwordAddition]}>Password</Text>
         <View style = {styles.action}>
-          <FontAwesome
-            name = "lock"
-            color = "#05375a"
-            size = {20}
-          />
           <TextInput style = {styles.textInput}
           placeholder = "Password"
           autoCapitalize = "none"
           secureTextEntry = {data.secureTextEntry}
           onChangeText = { (val) => handlePasswordChange(val)}
           />
-          <TouchableOpacity
-            onPress = {() => togglePassword()}
-          >
-            {
-              data.secureTextEntry ?
-              <Feather
-              name =  "eye-off"
-              color = "grey"
-              size = {20}
-              /> :
-              <Feather
-                name =  "eye"
-                color = "grey"
-                size = {20}
-              />
-            }
-          </TouchableOpacity>
         </View>
 
         <Text style = {[styles.text_footer, styles.passwordAddition]}>Confirm Password</Text>
         <View style = {styles.action}>
-          <FontAwesome
-            name = "lock"
-            color = "#05375a"
-            size = {20}
-          />
           <TextInput style = {styles.textInput}
           placeholder = "Confirm password"
           autoCapitalize = "none"
           secureTextEntry = {data.secureTextEntry}
           onChangeText = { (val) => handleConfirmPasswordChange(val)}
           />
-          <TouchableOpacity
-            onPress = {() => togglePassword()}
-          >
-            {
-              data.secureTextEntry ?
-              <Feather
-              name =  "eye-off"
-              color = "grey"
-              size = {20}
-              /> :
-              <Feather
-                name =  "eye"
-                color = "grey"
-                size = {20}
-              />
-            }
-          </TouchableOpacity>
         </View>
 
         <View style = { styles.button}>
-            <LinearGradient
-              colors = {['#08d4c4', '#01ab9d']}
-              style = {styles.signIn}
-            >
-              <Text style = { [styles.textSign, styles.textAddon]}>Sign In</Text>
-            </LinearGradient>
             <TouchableOpacity
-              onPress = { () => navigation.navigate('SignUp')}
+              onPress = { () => navigation.navigate('CarDetailsScreen')}
               style = { [styles.signIn]}
             >
-              <Text>Sign Up</Text>
+              <Text style = { styles.buttonColor}>Next</Text>
             </TouchableOpacity>
         </View>
+        </ScrollView>
       </Animatable.View>
     </View>
   );
@@ -187,11 +123,16 @@ const SignUp = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#009387',
+    justifyContent: 'center',
+    backgroundColor: '#333333',
+  },
+  buttonColor: {
+    color: '#fff',
   },
   textInput: {
     marginTop: Platform.OS === 'ios' ? 0 : 12,
     paddingLeft: 10,
+    height: 60,
   },
   passwordAddition: {
     marginTop: 35,
@@ -201,6 +142,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     paddingHorizontal: 20,
     paddingBottom: 20,
+    marginBottom: 20,
   },
   footer: {
     flex: 3,
@@ -217,7 +159,8 @@ const styles = StyleSheet.create({
   },
   text_footer: {
     color: '#05375a',
-    fontSize: 18,
+    fontSize: 20,
+    fontWeight: '900',
   },
   errorMsg: {
     color: '#FF0000',
@@ -225,7 +168,17 @@ const styles = StyleSheet.create({
   },
   button: {
     alignItems: 'center',
-    marginTop: 50,
+    marginTop: 20,
+    backgroundColor: '#828282',
+    borderRadius: 30,
+    color: '#fff',
+  },
+  signUpButton: {
+    alignItems: 'center',
+    marginTop: 20,
+    backgroundColor: '#828282',
+    borderRadius: 30,
+    color: '#333333',
   },
   signIn: {
     width: '100%',
@@ -250,8 +203,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 10,
     borderBottomWidth: 1,
-    borderBottomColor: '#f2f2f2',
-    paddingBottom: 5,
+    borderBottomColor: '#828282',
+    paddingBottom: 3,
   },
   actionError: {
     flexDirection: 'row',

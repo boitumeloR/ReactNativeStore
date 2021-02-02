@@ -18,6 +18,8 @@ import {Feather} from 'react-native-vector-icons/Feather';
 
 const Login = ({navigation}) => {
 
+  const [textStyle, setTextStyle] = useState(styles.action);
+  const [passwordStyle, setPasswordStyle] = useState(styles.action);
   const [data, setData] = useState({
     email: 'Hello',
     password: 'World',
@@ -54,10 +56,37 @@ const Login = ({navigation}) => {
       secureTextEntry: !data.secureTextEntry,
     });
   };
+  const changeInputStyle = () => {
+    setTextStyle({
+      ...textStyle,
+      borderBottomColor: '#000',
+    });
+  };
+
+  const revertInputStyle = () => {
+    setTextStyle({
+      ...textStyle,
+      borderBottomColor: '#009387',
+    });
+  };
+
+  const revertPasswordStyle = () => {
+    setTextStyle({
+      ...passwordStyle,
+      borderBottomColor: '#009387',
+    });
+  };
+
+  const changePasswordStyle = () => {
+    setPasswordStyle({
+      ...passwordStyle,
+      borderBottomColor: '#000',
+    });
+  };
 
   return (
     <View style = {styles.container}>
-      <StatusBar barStyle = "light-content" backgroundColor = "#009387"/>
+      <StatusBar barStyle = "light-content" backgroundColor = "#333333"/>
       <View style = { styles.header}>
         <Text style = {styles.text_header}>Login to Gain Access</Text>
       </View>
@@ -67,38 +96,45 @@ const Login = ({navigation}) => {
       animation = "fadeInUpBig"
       >
       <Text style = {styles.text_footer}>Email Address</Text>
-      <View style = {styles.action}>
+      <View style = {textStyle}>
         <TextInput style = {styles.textInput}
           placeholder = "Enter your email"
           autoCapitalize = "none"
           value = {data.email}
+          focusable = {true}
+          onFocus = {() => changeInputStyle()}
+          onBlur = {() => revertInputStyle()}
           onChangeText = { (val) => changeInput(val)}
           />
       </View>
       <Text style = {[styles.text_footer, styles.passwordAddition]}>Password</Text>
-      <View style = {styles.action}>
+      <View style = {passwordStyle}>
         <TextInput style = {styles.textInput}
         placeholder = "Password"
         autoCapitalize = "none"
         secureTextEntry = {data.secureTextEntry}
         value = {data.password}
         focusable = {true}
+        onFocus = {() => changePasswordStyle()}
+        onBlur = {() => revertPasswordStyle()}
         onChangeText = { (val) => handlePasswordChange(val)}
         />
       </View>
 
       <View style = { styles.button}>
-          {/* <LinearGradient
-            colors = {['#08d4c4', '#01ab9d']}
-            style = {styles.signIn}
-          >
-            <Text style = { [styles.textSign, styles.textAddon]}>Sign In</Text>
-          </LinearGradient> */}
+            <TouchableOpacity
+              onPress = { () => navigation.navigate('SignUpScreen')}
+              style = { [styles.signIn]}
+            >
+              <Text style = { styles.buttonColor}>Sign In</Text>
+            </TouchableOpacity>
+        </View>
+      <View style = { styles.signUpButton}>
           <TouchableOpacity
-            onPress = { () => navigation.navigate('SignUp')}
+            onPress = { () => navigation.navigate('SignUpScreen')}
             style = { [styles.signIn]}
           >
-            <Text>Sign Up</Text>
+            <Text style = { styles.buttonColor}>Sign Up</Text>
           </TouchableOpacity>
       </View>
     </Animatable.View>
@@ -110,7 +146,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#009387',
+    backgroundColor: '#333333',
+  },
+  buttonColor: {
+    color: '#fff',
   },
   textInput: {
     marginTop: Platform.OS === 'ios' ? 0 : 12,
@@ -125,6 +164,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     paddingHorizontal: 20,
     paddingBottom: 20,
+    marginBottom: 20,
   },
   footer: {
     flex: 3,
@@ -141,7 +181,8 @@ const styles = StyleSheet.create({
   },
   text_footer: {
     color: '#05375a',
-    fontSize: 18,
+    fontSize: 20,
+    fontWeight: '900',
   },
   errorMsg: {
     color: '#FF0000',
@@ -149,10 +190,17 @@ const styles = StyleSheet.create({
   },
   button: {
     alignItems: 'center',
-    marginTop: 50,
-    backgroundColor: '#009387',
+    marginTop: 20,
+    backgroundColor: '#828282',
     borderRadius: 30,
     color: '#fff',
+  },
+  signUpButton: {
+    alignItems: 'center',
+    marginTop: 20,
+    backgroundColor: '#828282',
+    borderRadius: 30,
+    color: '#333333',
   },
   signIn: {
     width: '100%',
@@ -177,8 +225,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 10,
     borderBottomWidth: 1,
-    borderBottomColor: '#f2f2f2',
-    paddingBottom: 5,
+    borderBottomColor: '#009387',
+    paddingBottom: 3,
   },
   actionError: {
     flexDirection: 'row',

@@ -9,7 +9,7 @@ import {
 
 const Splash = ({navigation}) => {
     return (
-        <View style = {styles}>
+        <View style = {styles.main}>
             <Text>Splash Works</Text>
             <TextInput style = {styles.textInput}
           placeholder = "Enter your email"
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     main: {
         flex: 1,
         justifyContent: 'center',
-        backgroundColor: '#333333',
+        backgroundColor: '#fff',
     },
 });
 
