@@ -112,7 +112,9 @@ const App = () => {
         <Stack.Screen name = "Home" component = {MainDrawer}
         options = {{headerShown: false}}
         />
-        <Stack.Screen name = "ViewProductScreen" component = {ViewProduct} />
+        <Stack.Screen name = "ViewProductScreen" component = {ViewProduct} 
+        options = {{headerShown: false}}
+        />
       </Stack.Navigator>
     );
   };

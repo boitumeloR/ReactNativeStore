@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { useState} from 'react';
 import {
     View,
     Text,
     ScrollView,
-    SafeAreaView,
     StyleSheet,
     Image,
+    TouchableOpacity,
+    StatusBar,
+    Dimensions,
 } from 'react-native';
 
 import { } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import Recommended from './Recommended';
 
@@ -42,13 +43,133 @@ const Products = ({navigation}) => {
             price: 2000,
         },
     ];
+
+    const [coatStyle, setCoatStyle] = useState({
+        ...styles.categoryButton,
+        backgroundColor: 'F8D9E0',
+    });
+
+    const [pantsStyle, setPantsStyle] = useState({
+        ...styles.categoryButton,
+    });
+
+    const [jerseyStyle, setJerseyStyle] = useState({
+        ...styles.categoryButton,
+    });
+
+    const [dressStyle, setDressStyle] = useState({
+        ...styles.categoryButton,
+    });
+
+    const coatActive = () => {
+        setCoatStyle({
+            ...coatStyle,
+            backgroundColor: '#F8D9E0',
+        });
+        setDressStyle({
+            ...dressStyle,
+            backgroundColor: '#fff',
+        });
+
+        setJerseyStyle({
+            ...jerseyStyle,
+            backgroundColor: '#fff',
+        });
+
+        setPantsStyle({
+            ...pantsStyle,
+            backgroundColor: '#fff',
+        });
+    };
+
+    const dressActive = () => {
+        setCoatStyle({
+            ...coatStyle,
+            backgroundColor: '#fff',
+        });
+        setDressStyle({
+            ...dressStyle,
+            backgroundColor: '#F8D9E0',
+        });
+
+        setJerseyStyle({
+            ...jerseyStyle,
+            backgroundColor: '#fff',
+        });
+
+        setPantsStyle({
+            ...pantsStyle,
+            backgroundColor: '#fff',
+        });
+    };
+
+    const jerseyActive = () => {
+        setCoatStyle({
+            ...coatStyle,
+            backgroundColor: '#fff',
+        });
+        setDressStyle({
+            ...dressStyle,
+            backgroundColor: '#fff',
+        });
+
+        setJerseyStyle({
+            ...jerseyStyle,
+            backgroundColor: '#F8D9E0',
+        });
+
+        setPantsStyle({
+            ...pantsStyle,
+            backgroundColor: '#fff',
+        });
+    };
+
+    const pantsActive = () => {
+        setCoatStyle({
+            ...coatStyle,
+            backgroundColor: '#fff',
+        });
+        setDressStyle({
+            ...dressStyle,
+            backgroundColor: '#fff',
+        });
+
+        setJerseyStyle({
+            ...jerseyStyle,
+            backgroundColor: '#fff',
+        });
+
+        setPantsStyle({
+            ...pantsStyle,
+            backgroundColor: '#F8D9E0',
+        });
+    };
     return (
         // <SafeAreaView>
             <View style = {styles.mainContainer}>
+                <StatusBar barStyle = "dark-content" backgroundColor = "#fff" />
                 <ScrollView>
-                    <Text style = {styles.categoryName}>
+                    <ScrollView
+                    horizontal = {true}
+                    alwaysBounceHorizontal = {true}
+                    showsHorizontalScrollIndicator = {false}
+                    >
+                        <TouchableOpacity style = {coatStyle} onPress = {() => coatActive()}>
+                            <Text style = {styles.buttonText}>Coats</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style = {dressStyle} onPress = {() => dressActive()}>
+                            <Text style = {styles.buttonText}>Dresses</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style = {jerseyStyle} onPress = {() => jerseyActive()}>
+                            <Text style = {styles.buttonText}>Jerseys</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style = {pantsStyle} onPress = {() => pantsActive()}>
+                            <Text style = {styles.buttonText}>Pants</Text>
+                        </TouchableOpacity>
+                    </ScrollView>
+                    {/* <Text style = {styles.categoryName}>
                         Coats
-                    </Text>
+                    </Text> */}
                     <ScrollView
                     horizontal = {true}
                     showsHorizontalScrollIndicator = {false}
@@ -56,12 +177,16 @@ const Products = ({navigation}) => {
                         {
                             images.map((image, k) => {
                                 return (
-                                    <View style = {styles.imageContainer} key ={ k}>
-                                        <Image style = { styles.images} source = {require('../assets/coats/coats4.jpg')} />
-                                        <View style = {styles.description}>
-                                            <Text style = {styles.textNameContainer}>{ image.name}</Text>
-                                            <Text style = {styles.textContainer}>{ image.price}</Text>
-                                        </View>
+                                    <View key ={ k}>
+                                        <TouchableOpacity style = {styles.imageContainer}
+                                        onPress = { () => navigation.navigate('ViewProductScreen')}
+                                        >
+                                            <Image style = { styles.images} source = {require('../assets/coats/coats4.jpg')} />
+                                            <View style = {styles.description}>
+                                                <Text style = {styles.textNameContainer}>{ image.name}</Text>
+                                                <Text style = {styles.textContainer}>{ image.price}</Text>
+                                            </View>
+                                        </TouchableOpacity>
                                     </View>
                                 );
                             })
@@ -69,6 +194,9 @@ const Products = ({navigation}) => {
                     </ScrollView>
                     <Recommended />
                 </ScrollView>
+                <TouchableOpacity style = {styles.bottomButton }>
+                    <Text style = { styles.bottomText}>Search</Text>
+                </TouchableOpacity>
             </View>
         // </ SafeAreaView>
     );
@@ -78,6 +206,7 @@ const styles = StyleSheet.create({
     mainContainer: {
         backgroundColor: 'white',
         flex: 1,
+        position: 'relative',
     },
     categoryName : {
         fontWeight: 'bold',
@@ -85,6 +214,23 @@ const styles = StyleSheet.create({
         marginTop: 40,
         marginLeft: 20,
         marginBottom: 40,
+    },
+    categoryButton: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 20,
+        marginLeft: 20,
+        marginBottom: 40,
+        width: 90,
+        backgroundColor: '#fff',
+        padding: 15,
+        borderRadius: 30,
+    },
+
+    buttonText: {
+        fontSize: 17,
+        fontWeight: 'bold',
     },
     imageContainer: {
         width: 250,
@@ -115,6 +261,24 @@ const styles = StyleSheet.create({
         alignSelf: 'stretch',
         width: undefined,
         height: undefined,
+    },
+    bottomButton: {
+        position: 'absolute',
+        flex: 1,
+        flexDirection: 'row',
+        bottom: 5,
+        justifyContent: 'center',
+        alignSelf: 'center',
+        backgroundColor: '#333333',
+        width: 120,
+        padding: 20,
+        borderRadius: 50,
+        left: (Dimensions.get('window').width / 2) - 60,
+    },
+    bottomText: {
+        color: '#fff',
+        fontSize: 17,
+        fontWeight: 'bold',
     },
 });
 
