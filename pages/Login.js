@@ -11,10 +11,13 @@ import {
   StatusBar,
 } from 'react-native';
 
+import {AuthContext} from '../components/context';
+
 import {LinearGradient} from 'react-native-linear-gradient';
 import * as Animatable from 'react-native-animatable';
 import {FontAwesome} from 'react-native-vector-icons/FontAwesome';
 import {Feather} from 'react-native-vector-icons/Feather';
+import { useContext } from 'react';
 
 const Login = ({navigation}) => {
 
@@ -84,6 +87,12 @@ const Login = ({navigation}) => {
     });
   };
 
+  const {signIn} = useContext(AuthContext);
+  const handleLogin = () => {
+    // Validate here
+    signIn();
+  };
+
   return (
     <View style = {styles.container}>
       <StatusBar barStyle = "light-content" backgroundColor = "#333333"/>
@@ -123,7 +132,7 @@ const Login = ({navigation}) => {
 
       <View style = { styles.button}>
             <TouchableOpacity
-              onPress = { () => navigation.navigate('SignUpScreen')}
+              onPress = { () => handleLogin()}
               style = { [styles.signIn]}
             >
               <Text style = { styles.buttonColor}>Sign In</Text>

@@ -1,11 +1,11 @@
-import { React } from 'react';
+import React from 'react';
 import {
     View,
     Text,
 } from 'react-native';
 
 
-const CarDetails = () => {
+const CarDetails = ({navigation}) => {
     return (
         <View>
             <Text>Text</Text>

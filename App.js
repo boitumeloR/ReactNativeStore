@@ -32,10 +32,17 @@ import {
   DefaultTheme as PaperDefaultTheme,
   DarkTheme as PaperDarkTheme,
 } from 'react-native-paper';
+
+import AsyncStorage from '@react-native-community/async-storage';
+import {AuthContext} from './components/context';
 import Routes from './routing/Routes.js';
 import { useState } from 'react';
 import Login from './pages/Login.js';
 import StackScreen from './pages/StackScreens.js';
+import Products from './pages/Products';
+
+import {createStackNavigator} from '@react-navigation/stack';
+import ViewProduct from './pages/ViewProduct';
 
 const Drawer = createDrawerNavigator();
 
@@ -61,20 +68,69 @@ const App = () => {
       text: '#ffffff',
     },
   };
+  const [loggedIn, setLoggedIn] =  useState(false);
+  const authContext = React.useMemo(() => ({
+    signIn: async () => {
+      const token = {
+        ID: 'trampete92@gmail.com',
+      };
+
+      try {
+        await AsyncStorage.setItem('userToken', JSON.stringify(token));
+        setLoggedIn(true);
+      } catch (e){
+        console.log(e);
+      }
+    },
+  }), []);
 
   const isDarkTheme =  useState(false);
-  const loggedIn =  useState(false);
 
   const theme = isDarkTheme ? customDarkTheme : customDefaultTheme;
+
+  const Stack = createStackNavigator();
+
+
+  const ModalStackScreen = () => {
+    return (
+      <Stack.Navigator mode = "modal" >
+        <Stack.Screen name = "ViewProductScreen" component = {ViewProduct} />
+      </Stack.Navigator>
+    );
+  };
+
+  const MainDrawer = () => {
+    return (
+      <Drawer.Navigator>
+        <Drawer.Screen name= "HomeDrawer" component = {Products}/>
+    </Drawer.Navigator>
+    );
+  };
+  const MainStack = () => {
+    return (
+      <Stack.Navigator mode ="modal" >
+        <Stack.Screen name = "Home" component = {MainDrawer}
+        options = {{headerShown: false}}
+        />
+        <Stack.Screen name = "ViewProductScreen" component = {ViewProduct} />
+      </Stack.Navigator>
+    );
+  };
+
   return (
     <View style = {styles.mainSection}>
-      {/* <SafeAreaView> */}
         {/* <PaperProvider theme = {theme}> */}
-        <NavigationContainer theme = {theme}>
-          <StackScreen />
-        </NavigationContainer>
-      {/* </PaperProvider> */}
-      {/* </SafeAreaView> */}
+        <AuthContext.Provider value = {authContext}>
+          <NavigationContainer theme = {theme}>
+            {
+              !loggedIn ?
+              <StackScreen />
+              :
+              <MainStack />
+            }
+          </NavigationContainer>
+        {/* </PaperProvider> */}
+        </AuthContext.Provider>
     </View>
   );
 };
