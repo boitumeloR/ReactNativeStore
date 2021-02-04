@@ -10,6 +10,8 @@ import {
     Dimensions,
 } from 'react-native';
 
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 import { } from 'react-native';
 
 import Recommended from './Recommended';
@@ -149,6 +151,14 @@ const Products = ({navigation}) => {
             <View style = {styles.mainContainer}>
                 <StatusBar barStyle = "dark-content" backgroundColor = "#fff" />
                 <ScrollView>
+                <View style = {styles.topPanel}>
+                    <TouchableOpacity>
+                        <Icon name="user" size={30} color="#333333" />
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <Icon name="shopping-cart" size={30} color="#333333" />
+                    </TouchableOpacity>
+                </View>
                     <ScrollView
                     horizontal = {true}
                     alwaysBounceHorizontal = {true}
@@ -184,7 +194,7 @@ const Products = ({navigation}) => {
                                             <Image style = { styles.images} source = {require('../assets/coats/coats4.jpg')} />
                                             <View style = {styles.description}>
                                                 <Text style = {styles.textNameContainer}>{ image.name}</Text>
-                                                <Text style = {styles.textContainer}>{ image.price}</Text>
+                                                <Text style = {styles.textContainer}>R{ image.price}</Text>
                                             </View>
                                         </TouchableOpacity>
                                     </View>
@@ -195,7 +205,7 @@ const Products = ({navigation}) => {
                     <Recommended />
                 </ScrollView>
                 <TouchableOpacity style = {styles.bottomButton }>
-                    <Text style = { styles.bottomText}>Search</Text>
+                <Icon name="search" size={30} color="#fff" />
                 </TouchableOpacity>
             </View>
         // </ SafeAreaView>
@@ -207,6 +217,15 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         flex: 1,
         position: 'relative',
+    },
+    topPanel: {
+        marginBottom: 20,
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginLeft: 30,
+        marginRight: 30,
+        marginTop: 40,
     },
     categoryName : {
         fontWeight: 'bold',
@@ -222,7 +241,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
         marginLeft: 20,
         marginBottom: 40,
-        width: 90,
+        width: 100,
         backgroundColor: '#fff',
         padding: 15,
         borderRadius: 30,
