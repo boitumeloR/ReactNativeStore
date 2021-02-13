@@ -14,44 +14,139 @@ import {
   View,
   Text,
   StatusBar,
-  Button,
 } from 'react-native';
 
 import {
-  Header,
-  LearnMoreLinks,
   Colors,
-  DebugInstructions,
-  ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-import Login from './pages/Login';
+import {
+  NavigationContainer,
+  DefaultTheme as NavigationDefaultTheme,
+  DarkTheme as NavigationDarkTheme,
+} from '@react-navigation/native';
+
+import {createDrawerNavigator} from '@react-navigation/drawer';
+import {
+  Provider as PaperProvider,
+  DefaultTheme as PaperDefaultTheme,
+  DarkTheme as PaperDarkTheme,
+} from 'react-native-paper';
+
+import AsyncStorage from '@react-native-community/async-storage';
+import {AuthContext} from './components/context';
+import Routes from './routing/Routes.js';
+import { useState } from 'react';
+import Login from './pages/Login.js';
+import StackScreen from './pages/StackScreens.js';
+import Products from './pages/Products';
+
+import {createStackNavigator} from '@react-navigation/stack';
+import ViewProduct from './pages/ViewProduct';
+
+const Drawer = createDrawerNavigator();
 
 const App = () => {
+  const customDefaultTheme = {
+    ...NavigationDefaultTheme,
+    ...PaperDefaultTheme,
+    colors: {
+      ...NavigationDefaultTheme.colors,
+      ...PaperDefaultTheme.colors,
+      background: '#ffffff',
+      text: '#333333',
+    },
+  };
+
+  const customDarkTheme = {
+    ...NavigationDarkTheme,
+    ...PaperDarkTheme,
+    colors: {
+      ...NavigationDarkTheme.colors,
+      ...PaperDarkTheme.colors,
+      background: '#333333',
+      text: '#ffffff',
+    },
+  };
+  const [loggedIn, setLoggedIn] =  useState(false);
+  const authContext = React.useMemo(() => ({
+    signIn: async () => {
+      const token = {
+        ID: 'trampete92@gmail.com',
+      };
+
+      try {
+        await AsyncStorage.setItem('userToken', JSON.stringify(token));
+        setLoggedIn(true);
+      } catch (e){
+        console.log(e);
+      }
+    },
+  }), []);
+
+  const isDarkTheme =  useState(false);
+
+  const theme = isDarkTheme ? customDarkTheme : customDefaultTheme;
+
+  const Stack = createStackNavigator();
+
+
+  const ModalStackScreen = () => {
+    return (
+      <Stack.Navigator mode = "modal" >
+        <Stack.Screen name = "ViewProductScreen" component = {ViewProduct} />
+      </Stack.Navigator>
+    );
+  };
+
+  const MainDrawer = () => {
+    return (
+      <Drawer.Navigator>
+        <Drawer.Screen name= "HomeDrawer" component = {Products}/>
+    </Drawer.Navigator>
+    );
+  };
+  const MainStack = () => {
+    return (
+      <Stack.Navigator mode ="modal" >
+        <Stack.Screen name = "Home" component = {MainDrawer}
+        options = {{headerShown: false}}
+        />
+        <Stack.Screen name = "ViewProductScreen" component = {ViewProduct} 
+        options = {{headerShown: false}}
+        />
+      </Stack.Navigator>
+    );
+  };
+
   return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <Login />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </>
+    <View style = {styles.mainSection}>
+        {/* <PaperProvider theme = {theme}> */}
+        <AuthContext.Provider value = {authContext}>
+          <NavigationContainer theme = {theme}>
+            {
+              !loggedIn ?
+              <StackScreen />
+              :
+              <MainStack />
+            }
+          </NavigationContainer>
+        {/* </PaperProvider> */}
+        </AuthContext.Provider>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   scrollView: {
     backgroundColor: Colors.lighter,
+  },
+  baseText: {
+    fontFamily: 'Cochin',
+  },
+  mainSection: {
+    flex: 1,
+    justifyContent: 'center',
   },
   engine: {
     position: 'absolute',
