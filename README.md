@@ -1,3 +1,3 @@
 # ReactNativeStore
 My first React Native App. An online store
-<div style="width:260px;max-width:100%;"><div style="height:0;padding-bottom:218.08%;position:relative;"><iframe width="260" height="567" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameBorder="0" src="https://imgflip.com/embed/50s063"></iframe></div><p><a href="https://imgflip.com/gif/50s063">via Imgflip</a></p></div>
+<a href="https://imgflip.com/gif/50s0ia"> <img src = "https://i.imgflip.com/50s0ia.gif" /></a>
